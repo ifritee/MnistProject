@@ -18,7 +18,9 @@ using namespace tensorflow::ops;
 namespace cpp_keras
 {
 
-  TFKerasModel::TFKerasModel(EModelArchitect arch) : m_root(Scope::NewRootScope())
+  TFKerasModel::TFKerasModel(EModelArchitect arch) :
+    m_root(Scope::NewRootScope()),
+    m_architecture(arch)
   {
 
   }

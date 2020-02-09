@@ -28,6 +28,7 @@ namespace cpp_keras
   {
     tensorflow::Scope m_root; ///< @brief Основной граф
     std::list<cpp_layers::AbstractLayer *> m_layers;  ///< @brief Все слои в модели
+    EModelArchitect m_architecture; ///< @brief архитектура модели
 
   public:
     /**
