@@ -27,6 +27,8 @@ namespace cpp_keras
     protected:
       int m_inputLinks;  ///< @brief Количество входов
       int m_outputLinks; ///< @brief Количество выходов
+
+      std::string m_layerNumber;  ///< @brief Номер слоя (сквозной)
     };
   }
 }

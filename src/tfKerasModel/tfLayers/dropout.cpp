@@ -22,14 +22,14 @@ namespace cpp_keras
     {
       //----- Слой Drop -----
       const float skipDropVar = 0.f;
-      auto DropScope = root.WithOpName("Dropout");
-      auto rand = RandomUniform(DropScope, Shape(DropScope.WithOpName("DropoutShape"), output), DT_FLOAT);
-      auto sub = Sub(DropScope.WithOpName("DropoutSub"), 1.f, m_dropRateVar);
-      auto add = Add(DropScope.WithOpName("DropoutAdd"), sub, skipDropVar);
-      auto add2 = Add(DropScope.WithOpName("DropoutAdd2"), rand, add);
-      auto floor = Floor(DropScope.WithOpName("DropoutFloor"), add2);
-      auto div = Div(DropScope.WithOpName("DropoutDiv"), output, m_dropRateVar);
-      auto multi = Multiply(DropScope.WithOpName("DropoutMultiply"), div, floor);
+      auto DropScope = root.NewSubScope("Dropout" + m_layerNumber);
+      auto rand = RandomUniform(DropScope, Shape(DropScope.WithOpName("Shape"), output), DT_FLOAT);
+      auto sub = Sub(DropScope.WithOpName("Sub"), 1.f, m_dropRateVar);
+      auto add = Add(DropScope.WithOpName("Add1"), sub, skipDropVar);
+      auto add2 = Add(DropScope.WithOpName("Add2"), rand, add);
+      auto floor = Floor(DropScope.WithOpName("Floor"), add2);
+      auto div = Div(DropScope.WithOpName("Div"), output, m_dropRateVar);
+      auto multi = Multiply(DropScope.WithOpName("Multiply"), div, floor);
       return multi;
     }
   }

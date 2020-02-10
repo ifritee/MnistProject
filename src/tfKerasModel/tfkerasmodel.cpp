@@ -42,6 +42,7 @@ namespace cpp_keras
   Status TFKerasModel::compile(const string & /*optimizer*/, const string & /*loss*/, std::vector<string> /*metrics*/)
   {
     Output data = Placeholder(m_root.WithOpName("DATA"), DT_FLOAT);
+    //----- Запись всех слоев в граф -----
     int outputLinks = 0;
     for(auto layer: m_layers) {
       if(outputLinks > 0) {
@@ -50,6 +51,12 @@ namespace cpp_keras
       data = layer->compile(m_root, data);
       outputLinks = layer->outputLinks();
     }
+    //----- Создание графа -----
+    GraphDef graph;
+    TF_CHECK_OK(m_root.ToGraphDef(&graph));
+    std::unique_ptr<tensorflow::Session> session(tensorflow::NewSession(tensorflow::SessionOptions()));
+    TF_CHECK_OK(session->Create(graph));
+    std::cout << graph.DebugString() <<std::endl;
     return m_root.status();
   }
 

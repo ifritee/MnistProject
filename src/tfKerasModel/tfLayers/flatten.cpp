@@ -23,7 +23,8 @@ namespace cpp_keras
 
     Output Flatten::compile(tensorflow::Scope & root, Output output)
     {
-      auto flat = Reshape(root.WithOpName("FlattenLayer"), output, {-1, m_inputLinks});
+      Scope flattenLayer = root.NewSubScope("FlattenLayer" + m_layerNumber);
+      auto flat = Reshape(flattenLayer.WithOpName("Reshape"), output, {-1, m_inputLinks});
       m_outputLinks = m_length;
       return flat;
     }
