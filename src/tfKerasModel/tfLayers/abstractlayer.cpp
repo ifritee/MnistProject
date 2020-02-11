@@ -19,5 +19,12 @@ namespace cpp_keras
     {
 
     }
+
+    void AbstractLayer::setNetworkMaps(std::map<std::string, tensorflow::Output> *vars, std::map<std::string, tensorflow::TensorShape> *shapes, std::map<std::string, tensorflow::Output> *assigns)
+    {
+      m_vars = vars;
+      m_shapes = shapes;
+      m_assigns = assigns;
+    }
   }
 }

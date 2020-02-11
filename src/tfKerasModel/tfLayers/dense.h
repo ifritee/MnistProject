@@ -6,6 +6,7 @@
 
 namespace tensorflow {
   class Scope;
+  class Input;
 }
 
 namespace cpp_keras
@@ -29,6 +30,9 @@ namespace cpp_keras
       virtual ~Dense();
       /** @brief Сборка очередного слоя выявление входов и выходов*/
       virtual tensorflow::Output compile(tensorflow::Scope & root, tensorflow::Output output) override;
+
+    private:
+      tensorflow::Input XavierInit(tensorflow::Scope &scope, int in_chan, int out_chan);
     };
   }
 }

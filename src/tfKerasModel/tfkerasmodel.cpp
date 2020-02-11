@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <map>
 
 #include "tensorflow/cc/client/client_session.h"
 #include "tensorflow/cc/ops/standard_ops.h"
@@ -45,6 +46,7 @@ namespace cpp_keras
     //----- Запись всех слоев в граф -----
     int outputLinks = 0;
     for(auto layer: m_layers) {
+      layer->setNetworkMaps(&m_vars, &m_shapes, &m_assigns);
       if(outputLinks > 0) {
         layer->setInputLinks(outputLinks);
       }

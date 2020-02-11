@@ -28,7 +28,7 @@ int main()
   cout << "Tensorflow compiler version: " << tf_compiler_version() <<endl;
 
   ImageProcessing imageProcessing;
-  imageProcessing.loadMNISTDataset("data/mnist");
+//  imageProcessing.loadMNISTDataset("data/mnist");
 
   TFKerasModel tfKerasModel;
   TF_CHECK_OK(tfKerasModel.add(new Flatten({28, 28})));
@@ -37,7 +37,7 @@ int main()
   TF_CHECK_OK(tfKerasModel.add(new Dense(10, ASoftmax_en)));
 
   TF_CHECK_OK(tfKerasModel.compile("adam", "sparse_categorical_crossentropy", {"accuracy"}));
-  TF_CHECK_OK(tfKerasModel.fit(*imageProcessing.tensorDataTrain(), *imageProcessing.tensorLabelTrain(), 10));
+//  TF_CHECK_OK(tfKerasModel.fit(*imageProcessing.tensorDataTrain(), *imageProcessing.tensorLabelTrain(), 10));
 
 //  std::cout<<trainLabel.DebugString(784)<<endl;
 

@@ -10,7 +10,6 @@ namespace cpp_keras
     DropOut::DropOut(float rate): AbstractLayer(),
       m_dropRateVar(rate)
     {
-
     }
 
     DropOut::~DropOut()
@@ -20,6 +19,7 @@ namespace cpp_keras
 
     tensorflow::Output DropOut::compile(tensorflow::Scope & root, tensorflow::Output output)
     {
+      m_outputLinks = m_inputLinks;
       //----- Слой Drop -----
       const float skipDropVar = 0.f;
       auto DropScope = root.NewSubScope("Dropout" + m_layerNumber);

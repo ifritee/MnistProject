@@ -1,6 +1,9 @@
 #ifndef ABSTRACTLAYER_H
 #define ABSTRACTLAYER_H
 
+#include <map>
+#include <string>
+
 #include "tensorflow/cc/client/client_session.h"
 #include "tensorflow/cc/ops/standard_ops.h"
 #include "tensorflow/core/framework/tensor.h"
@@ -23,12 +26,24 @@ namespace cpp_keras
       int outputLinks() { return m_outputLinks; }
       /** @brief Зададим количество входов */
       void setInputLinks(int qty) { m_inputLinks = qty; }
+      /**
+       * @brief setNetworkMaps Задание глобальных наборов данных сети
+       * @param vars переменные сети
+       * @param shapes Формы сети
+       * @param assigns Назначения сети
+       */
+      void setNetworkMaps( std::map<std::string, tensorflow::Output> * vars,
+                                  std::map<std::string, tensorflow::TensorShape> * shapes,
+                                  std::map<std::string, tensorflow::Output> * assigns);
 
     protected:
       int m_inputLinks;  ///< @brief Количество входов
       int m_outputLinks; ///< @brief Количество выходов
 
       std::string m_layerNumber;  ///< @brief Номер слоя (сквозной)
+      std::map<std::string, tensorflow::Output> * m_vars;
+      std::map<std::string, tensorflow::TensorShape> * m_shapes;
+      std::map<std::string, tensorflow::Output> * m_assigns;
     };
   }
 }

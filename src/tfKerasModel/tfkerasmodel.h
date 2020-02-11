@@ -7,13 +7,6 @@
 #include "constants.h"
 #include "tfLayers/abstractlayer.h"
 
-#include "tensorflow/cc/client/client_session.h"
-#include "tensorflow/cc/ops/standard_ops.h"
-#include "tensorflow/core/framework/tensor.h"
-#include "tensorflow/core/framework/tensor_shape.h"
-#include "tensorflow/core/public/session.h"
-#include "tensorflow/core/summary/summary_file_writer.h"
-
 /**
  * @namespace cpp_keras
  * Область видимости для модели Keras
@@ -29,6 +22,10 @@ namespace cpp_keras
     tensorflow::Scope m_root; ///< @brief Основной граф
     std::list<cpp_layers::AbstractLayer *> m_layers;  ///< @brief Все слои в модели
     EModelArchitect m_architecture; ///< @brief архитектура модели
+    //Network maps
+    std::map<std::string, tensorflow::Output> m_vars; ///< @brief Все переменные сети
+    std::map<std::string, tensorflow::TensorShape> m_shapes;  ///< @brief Все формы сети
+    std::map<std::string, tensorflow::Output> m_assigns;  ///< @brief Назначения сети
 
   public:
     /**
