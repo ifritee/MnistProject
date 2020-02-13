@@ -14,11 +14,6 @@ namespace cpp_keras {
   /** @brief Обработка изображения для дальнейшей передачи в Keras */
   class ImageProcessing
   {
-//    TImagesData m_dataTrain;  ///< @brief тренировочные данные
-//    std::vector<uint8_t> m_labelTrain;  ///< @brief метки тренировочных данных
-//    TImagesData m_dataTest; ///< @brief тестовые данные
-//    std::vector<uint8_t> m_labelTest; ///< @brief метки тестовых данных
-
     tensorflow::Tensor * m_tensorDataTrain = nullptr; ///< @brief тренировочные данные
     tensorflow::Tensor * m_tensorLabelTrain = nullptr; ///< @brief метки тренировочных данных
     tensorflow::Tensor * m_tensorDataTest = nullptr; ///< @brief тестовые данные
@@ -33,14 +28,6 @@ namespace cpp_keras {
      * @brief loadMnistDataset Загрузка сета картинок MNIST
      * @param pathToMnistDB Путь к картинкам */
     void loadMNISTDataset(const std::string & pathToMnistDB);
-//    /** @brief тренировочные данные */
-//    TImagesData & dataTrain();
-//    /** @brief метки тренировочных данных */
-//    std::vector<uint8_t> & labelTrain() ;
-//    /** @brief тестовые данные */
-//    TImagesData & dataTest() ;
-//    /** @brief метки тестовых данных */
-//    std::vector<uint8_t> & labelTest();
     /** @brief Вывод в консоль данного */
     void consoleOut(bool isTraining, int number);
 
@@ -63,7 +50,7 @@ namespace cpp_keras {
      * @brief extractLabels Распаковка меток картинок из БД
      * @param file Путь к файлу
      * @return Массив данных меток */
-    std::vector<uint8_t> extractLabels(const std::string & file);
+    std::vector<float> extractLabels(const std::string & file);
 
     /**
      * @brief ReadUint32 Чтение 4-х байт из потока

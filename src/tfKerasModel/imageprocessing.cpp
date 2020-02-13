@@ -53,26 +53,6 @@ namespace cpp_keras {
     return m_tensorLabelTest;
   }
 
-//  TImagesData & ImageProcessing::dataTrain()
-//  {
-//    return m_dataTrain;
-//  }
-
-//  std::vector<uint8_t> & ImageProcessing::labelTrain()
-//  {
-//    return m_labelTrain;
-//  }
-
-//  TImagesData & ImageProcessing::dataTest()
-//  {
-//    return m_dataTest;
-//  }
-
-//  std::vector<uint8_t> &ImageProcessing::labelTest()
-//  {
-//    return m_labelTest;
-//  }
-
   void ImageProcessing::consoleOut(bool isTraining, int number)
   {
 //    int count = 0, shift = 28;
@@ -106,9 +86,9 @@ namespace cpp_keras {
       }
       //----- Сохраняем метки тренировочных данных в тензоре -----
       delete m_tensorLabelTrain;
-      vector<uint8_t> m_labelTrain = extractLabels(pathToMnistDB + "/train-labels-idx1-ubyte");
-      m_tensorLabelTrain = new Tensor(DT_UINT8, TensorShape{static_cast<int>(m_labelTrain.size())});
-      copy_n(m_labelTrain.begin(), m_labelTrain.size(), m_tensorLabelTrain->flat<uint8_t>().data());
+      vector<float> m_labelTrain = extractLabels(pathToMnistDB + "/train-labels-idx1-ubyte");
+      m_tensorLabelTrain = new Tensor(DT_FLOAT, TensorShape{static_cast<int>(m_labelTrain.size())});
+      copy_n(m_labelTrain.begin(), m_labelTrain.size(), m_tensorLabelTrain->flat<float>().data());
     }
     { //----- Сохраняем тестовые данные в тензоре -----
       delete m_tensorDataTest;
@@ -124,9 +104,9 @@ namespace cpp_keras {
 
       //----- Сохраняем метки тестовых данных в тензоре -----
       delete m_tensorLabelTest;
-      vector<uint8_t> m_labelTest = extractLabels(pathToMnistDB + "/t10k-labels-idx1-ubyte");
-      m_tensorLabelTest = new Tensor(DT_UINT8, TensorShape{static_cast<int>(m_labelTest.size())});
-      copy_n(m_labelTest.begin(), m_labelTest.size(), m_tensorLabelTest->flat<uint8_t>().data());
+      vector<float> m_labelTest = extractLabels(pathToMnistDB + "/t10k-labels-idx1-ubyte");
+      m_tensorLabelTest = new Tensor(DT_FLOAT, TensorShape{static_cast<int>(m_labelTest.size())});
+      copy_n(m_labelTest.begin(), m_labelTest.size(), m_tensorLabelTest->flat<float>().data());
     }
   }
 
@@ -164,7 +144,7 @@ namespace cpp_keras {
     return imagesData;
   }
 
-  std::vector<uint8_t> ImageProcessing::extractLabels(const string& file)
+  std::vector<float> ImageProcessing::extractLabels(const string& file)
   {
     ifstream is(file);
     if (!is) {
@@ -175,10 +155,10 @@ namespace cpp_keras {
       throw logic_error("bad magic: " + to_string(magic));
     }
     uint32_t num = readUint32(is);
-    vector<uint8_t> labels;
+    vector<float> labels;
     for (size_t i = 0; i < num; ++i) {
       uint8_t byte = readUint8(is);
-      labels.push_back(byte);
+      labels.push_back(static_cast<float>(byte));
     }
     return labels;
   }

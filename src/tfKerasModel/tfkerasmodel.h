@@ -20,12 +20,22 @@ namespace cpp_keras
   class TFKerasModel
   {
     tensorflow::Scope m_root; ///< @brief Основной граф
+    std::unique_ptr<tensorflow::ClientSession> m_session; ///< @brief Клиентская сессия
+    tensorflow::Output m_data;
+    tensorflow::Output drop_rate_var;
+    tensorflow::Output skip_drop_var;
+    tensorflow::Output m_inputLabels;
+    tensorflow::Output outLossVariable;
+
     std::list<cpp_layers::AbstractLayer *> m_layers;  ///< @brief Все слои в модели
     EModelArchitect m_architecture; ///< @brief архитектура модели
     //Network maps
     std::map<std::string, tensorflow::Output> m_vars; ///< @brief Все переменные сети
     std::map<std::string, tensorflow::TensorShape> m_shapes;  ///< @brief Все формы сети
     std::map<std::string, tensorflow::Output> m_assigns;  ///< @brief Назначения сети
+
+    tensorflow::Output m_outClassification; ///< @brief Выходно классификатор
+    std::vector<tensorflow::Operation> m_outGrads;  ///< @brief Выходные градиенты
 
   public:
     /**
@@ -48,7 +58,7 @@ namespace cpp_keras
      * @param metrics мониторинга обучения
      * @return Статус настройки обучения
      */
-    tensorflow::Status compile(const std::string & optimizer, const std::string & loss, std::vector<std::string> metrics );
+    tensorflow::Status compile(std::string optimizerFunction, std::string loss, std::vector<std::string> metrics );
 
     /**
      * @brief fit Обучение модели
@@ -58,6 +68,18 @@ namespace cpp_keras
      * @return
      */
     tensorflow::Status fit(tensorflow::Tensor & data, tensorflow::Tensor & label, uint32_t epochs);
+
+  private:
+    /**
+     * @brief Задание функции потерь
+     * @param Тип функции потерь
+     */
+    std::vector<tensorflow::Output> lossyFunction(const std::string & lossy);
+
+    /** @brief Функция оптимизации */
+    void optimizerFunction(const std::string & optim, std::vector<tensorflow::Output> & gradient, float learning_rate);
+
+    tensorflow::Status initializeGraph();
   };
 
 }
