@@ -45,17 +45,19 @@ namespace cpp_keras
     m_data = Placeholder(m_root.WithOpName("DATA"), DT_FLOAT);
     drop_rate_var = Placeholder(m_root.WithOpName("drop_rate"), DT_FLOAT);
     skip_drop_var = Placeholder(m_root.WithOpName("skip_drop"), DT_FLOAT);
+
     //----- Запись всех слоев в граф -----
+    Output newData = m_data;
     int outputLinks = 0;
     for(auto layer: m_layers) {
       layer->setNetworkMaps(&m_vars, &m_shapes, &m_assigns);
       if(outputLinks > 0) {
         layer->setInputLinks(outputLinks);
       }
-      m_data = layer->compile(m_root, m_data);
+      newData = layer->compile(m_root, newData);
       outputLinks = layer->outputLinks();
     }
-    m_outClassification = Sigmoid(m_root.WithOpName("Output_Classes"), m_data);
+    m_outClassification = Sigmoid(m_root.WithOpName("Output_Classes"), newData);
     //----- Создание графа -----
     GraphDef graph;
     TF_CHECK_OK(m_root.ToGraphDef(&graph));
