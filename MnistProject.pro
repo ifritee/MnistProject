@@ -10,6 +10,7 @@ SOURCES += \
         src/main.cpp \
         src/tfKerasModel/imageprocessing.cpp \
         src/tfKerasModel/tfLayers/abstractlayer.cpp \
+        src/tfKerasModel/tfLayers/conv.cpp \
         src/tfKerasModel/tfLayers/dense.cpp \
         src/tfKerasModel/tfLayers/dropout.cpp \
         src/tfKerasModel/tfLayers/flatten.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     src/tfKerasModel/constants.h \
     src/tfKerasModel/imageprocessing.h \
     src/tfKerasModel/tfLayers/abstractlayer.h \
+    src/tfKerasModel/tfLayers/conv.h \
     src/tfKerasModel/tfLayers/dense.h \
     src/tfKerasModel/tfLayers/dropout.h \
     src/tfKerasModel/tfLayers/flatten.h \

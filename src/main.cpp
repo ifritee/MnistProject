@@ -7,6 +7,7 @@
 #include "tfKerasModel/tfLayers/dense.h"
 #include "tfKerasModel/tfLayers/flatten.h"
 #include "tfKerasModel/tfLayers/dropout.h"
+#include "tfKerasModel/tfLayers/conv.h"
 
 #include "tensorflow/cc/client/client_session.h"
 #include "tensorflow/cc/ops/standard_ops.h"
@@ -52,6 +53,7 @@ int main()
   imageProcessing.loadMNISTDataset("data/mnist");
 
   TFKerasModel tfKerasModel;
+  TF_CHECK_OK(tfKerasModel.add(new Conv(3)));
   TF_CHECK_OK(tfKerasModel.add(new Flatten({28, 28})));
   TF_CHECK_OK(tfKerasModel.add(new Dense(128, ARelu_en)));
   TF_CHECK_OK(tfKerasModel.add(new DropOut(0.2)));

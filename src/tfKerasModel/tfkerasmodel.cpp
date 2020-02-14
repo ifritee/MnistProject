@@ -87,6 +87,9 @@ namespace cpp_keras
     float loss = 0.f;
     float accuracy_sum = 0.f;
 
+    cout<<data.DeviceSafeDebugString()<<endl;
+    cout<<label.DeviceSafeDebugString()<<endl;
+
     for(uint32_t epoch = 0; epoch < epochs; ++epoch) {
       vector<float> results;
       vector<Tensor> out_tensors;
